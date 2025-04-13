@@ -17,6 +17,7 @@ public static class BuildExtension
     private static void AddInfrastructure(this WebApplicationBuilder builder)
     {
         builder.Services.AddEf(builder.Configuration);
+        builder.Services.AddInfrastructure();
     }
 
     private static void AddApplication(this WebApplicationBuilder builder)

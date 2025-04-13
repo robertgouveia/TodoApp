@@ -1,12 +1,18 @@
 using MediatR;
 using Todo.Application.Features.Todo.Commands;
+using Todo.Domain.Contracts;
 
 namespace Todo.Application.Features.Todo.Handlers;
 
-public class CreateTodoCommandHandler : IRequestHandler<CreateTodoCommand>
+public class CreateTodoCommandHandler(ITodoRepository repo) : IRequestHandler<CreateTodoCommand>
 {
-    public Task Handle(CreateTodoCommand request, CancellationToken cancellationToken)
+    public async Task Handle(CreateTodoCommand request, CancellationToken cancellationToken)
     {
-        return Task.CompletedTask;
+        await repo.Create(new Domain.Entities.Todo
+        {
+            Title = request.Title
+        });
+
+        await repo.Save();
     }
 }
